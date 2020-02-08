@@ -42,7 +42,28 @@ public class CountSubstrings {
 
 			System.out.print("Please enter the directory to your desired file: " + "\n");
 			String dir = input.nextLine();
-			dir += "\\";
+
+			boolean s = false;
+			while(!s)
+			{
+				System.out.print("What operating system are you using? Type U for linux/MacOs or W for windows." + "\n");
+				String sys = input.nextLine();
+
+				if(sys.contentEquals("w") || sys.contentEquals("W"))
+				{
+					dir += "\\";
+					s = true;
+				}
+				else if(sys.contentEquals("u") || sys.contentEquals("U"))
+				{
+					dir += "/";
+					s = true;
+				}
+				else
+				{
+					System.out.println("Invalid system type, please try again");
+				}
+			}
 
 			System.out.print("Please enter the file you want to perform the search on: " + "\n");
 			String file = input.nextLine();
@@ -102,7 +123,7 @@ public class CountSubstrings {
 		}
 		catch(IOException e)
 		{
-			System.out.println("Error!");
+			System.out.println("Error! File not found or invalid String");
 			System.exit(1);
 		}
 	}
