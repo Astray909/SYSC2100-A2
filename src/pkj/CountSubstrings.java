@@ -81,10 +81,6 @@ public class CountSubstrings {
 			for(int i = 0; i < word.length(); i++)
 			{
 				listA.add(word.charAt(i));
-			}
-
-			for(int i = 0; i < word.length(); i++)
-			{
 				listL.add(word.charAt(i));
 			}
 
