@@ -15,8 +15,8 @@ public class CountSubstrings {
 
 	int countA = 0;
 	int countL = 0;
-	long timeA = 0;
-	long timeL = 0;
+	float timeA = 0;
+	float timeL = 0;
 	ArrayList<Character> listA = new ArrayList<Character>();
 	LinkedList<Character> listL = new LinkedList<Character>();
 
@@ -32,24 +32,33 @@ public class CountSubstrings {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		CountSubstrings c = new CountSubstrings();
+		try
+		{
+			CountSubstrings c = new CountSubstrings();
 
-		Scanner input = new Scanner(System.in);
+			Scanner input = new Scanner(System.in);
 
-		System.out.print("Please enter the directory to your desired file: ");
-		String dir = input.nextLine();
-		dir += "\\";
+			System.out.print("Please enter the directory to your desired file: " + "\n");
+			String dir = input.nextLine();
+			dir += "\\";
 
-		System.out.print("Please enter the file you want to perform the search on: ");
-		String file = input.nextLine();
-		String dF = dir + file;
+			System.out.print("Please enter the file you want to perform the search on: " + "\n");
+			String file = input.nextLine();
+			String dF = dir + file;
 
-		System.out.print("Please enter the word you want to search for: ");
-		String word = input.nextLine();
+			System.out.print("Please enter the word you want to search for: " + "\n");
+			String word = input.nextLine();
 
-		input.close();
+			input.close();
 
-		c.compare(word, dF);
+			c.compare(word, dF);
+		}
+
+		catch(IOException e)
+		{
+			System.out.println("file not found");
+		}
+
 	}
 
 
@@ -61,13 +70,13 @@ public class CountSubstrings {
 	 */
 	public void compare(String word, String dF) throws IOException
 	{
-		System.out.println("The String " + word + " will be searched in file " + dF);
+		System.out.println("The String <" + word + "> will be searched in file " + dF + "\n");
 
 		BufferedReader reader = new BufferedReader(new FileReader(dF));
 
 		String read = reader.readLine();
 
-		System.out.println(read);
+		//System.out.println(read);
 
 		for(int i = 0; i < word.length(); i++)
 		{
@@ -83,37 +92,43 @@ public class CountSubstrings {
 
 			StringTokenizer obj= new StringTokenizer(read);
 
-			while(obj.hasMoreTokens()){
+			while(obj.hasMoreTokens())
+			{
 				ArrayList<Character> charArrayList = new ArrayList<Character>();
 				LinkedList<Character> charLinkedList = new LinkedList<Character>();
+
 				String token = obj.nextToken();
-				for(int i=0;i<token.length();i++){
+
+				for(int i=0;i<token.length();i++)
+				{
 					charArrayList.add(token.charAt(i));
 					charLinkedList.add(token.charAt(i));
 				}
 
-				long startTA = System.currentTimeMillis();
-
+				//count time for ArrayList
+				long startA = System.currentTimeMillis();
 				if(findBrute(charArrayList,listA)!=-1){
 					countA++;
 				}
+				long endA = System.currentTimeMillis();
+				timeA = timeA + (endA-startA);
+				//end of timing block
 
-				long endTA = System.currentTimeMillis();
-				timeA = timeA + (endTA-startTA);
-
-				long startTL = System.currentTimeMillis();
-
+				//count time for LinkedList
+				long startL = System.currentTimeMillis();
 				if(findBrute( charLinkedList,listL)!=-1){
 					countL++;
 				}
+				long endL = System.currentTimeMillis();
+				timeL = timeL + (endL-startL);
+				//end of timing block
 
-				long endTL = System.currentTimeMillis();
-				timeL = timeL + (endTL-startTL);
 			}
 			read = reader.readLine();
 		}
-		System.out.println(countA+"time"+timeA);
-		System.out.println(countL+"time"+timeL);
+
+		System.out.println(countA + "matches, delivered in " + timeA + " milliseconds.");
+		System.out.println(countL + "matches, delivered in " + timeL + " milliseconds.");
 	}
 
 	//findBrute from CUlearn
