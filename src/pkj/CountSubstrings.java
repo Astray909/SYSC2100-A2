@@ -70,65 +70,71 @@ public class CountSubstrings {
 	 */
 	public void compare(String word, String dF) throws IOException
 	{
-		System.out.println("The String <" + word + "> will be searched in file " + dF + "\n");
-
-		BufferedReader reader = new BufferedReader(new FileReader(dF));
-
-		String read = reader.readLine();
-
-		//System.out.println(read);
-
-		for(int i = 0; i < word.length(); i++)
+		try
 		{
-			listA.add(word.charAt(i));
-		}
+			System.out.println("The String <" + word + "> will be searched in file " + dF + "\n");
 
-		for(int i = 0; i < word.length(); i++)
-		{
-			listL.add(word.charAt(i));
-		}
+			BufferedReader reader = new BufferedReader(new FileReader(dF));
 
-		while(read!=null){
+			String read = reader.readLine();
 
-			StringTokenizer obj= new StringTokenizer(read);
-
-			while(obj.hasMoreTokens())
+			for(int i = 0; i < word.length(); i++)
 			{
-				ArrayList<Character> charArrayList = new ArrayList<Character>();
-				LinkedList<Character> charLinkedList = new LinkedList<Character>();
-
-				String token = obj.nextToken();
-
-				for(int i=0;i<token.length();i++)
-				{
-					charArrayList.add(token.charAt(i));
-					charLinkedList.add(token.charAt(i));
-				}
-
-				//count time for ArrayList
-				long startA = System.currentTimeMillis();
-				if(findBrute(charArrayList,listA)!=-1){
-					countA++;
-				}
-				long endA = System.currentTimeMillis();
-				timeA = timeA + (endA-startA);
-				//end of timing block
-
-				//count time for LinkedList
-				long startL = System.currentTimeMillis();
-				if(findBrute( charLinkedList,listL)!=-1){
-					countL++;
-				}
-				long endL = System.currentTimeMillis();
-				timeL = timeL + (endL-startL);
-				//end of timing block
-
+				listA.add(word.charAt(i));
 			}
-			read = reader.readLine();
-		}
 
-		System.out.println(countA + "matches, delivered in " + timeA + " milliseconds.");
-		System.out.println(countL + "matches, delivered in " + timeL + " milliseconds.");
+			for(int i = 0; i < word.length(); i++)
+			{
+				listL.add(word.charAt(i));
+			}
+
+			while(read!=null){
+
+				StringTokenizer obj= new StringTokenizer(read);
+
+				while(obj.hasMoreTokens())
+				{
+					ArrayList<Character> charArrayList = new ArrayList<Character>();
+					LinkedList<Character> charLinkedList = new LinkedList<Character>();
+
+					String token = obj.nextToken();
+
+					for(int i=0;i<token.length();i++)
+					{
+						charArrayList.add(token.charAt(i));
+						charLinkedList.add(token.charAt(i));
+					}
+
+					//count time for ArrayList
+					long startA = System.currentTimeMillis();
+					if(findBrute(charArrayList,listA)!=-1){
+						countA++;
+					}
+					long endA = System.currentTimeMillis();
+					timeA = timeA + (endA-startA);
+					//end of timing block
+
+					//count time for LinkedList
+					long startL = System.currentTimeMillis();
+					if(findBrute( charLinkedList,listL)!=-1){
+						countL++;
+					}
+					long endL = System.currentTimeMillis();
+					timeL = timeL + (endL-startL);
+					//end of timing block
+
+				}
+				read = reader.readLine();
+			}
+
+			System.out.println(countA + "matches, delivered in " + timeA + " milliseconds.");
+			System.out.println(countL + "matches, delivered in " + timeL + " milliseconds.");
+		}
+		catch(IOException e)
+		{
+			System.out.println("Error!");
+			System.exit(1);
+		}
 	}
 
 	//findBrute from CUlearn
