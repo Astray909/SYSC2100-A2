@@ -123,8 +123,8 @@ public class CountSubstrings {
 				read = reader.readLine();
 			}
 
-			System.out.println(countA + "matches, delivered in " + timeA + " milliseconds.");
-			System.out.println(countL + "matches, delivered in " + timeL + " milliseconds.");
+			System.out.println("Using ArrayList, found " + countA + "matches, delivered in " + timeA + " milliseconds.");
+			System.out.println("Using LinkedList, found " + countL + "matches, delivered in " + timeL + " milliseconds.");
 		}
 		catch(IOException e)
 		{
