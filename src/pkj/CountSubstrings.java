@@ -19,6 +19,8 @@ public class CountSubstrings {
 	float timeL = 0;
 	ArrayList<Character> listA = new ArrayList<Character>();
 	LinkedList<Character> listL = new LinkedList<Character>();
+	ArrayList<Character> cListA;
+	LinkedList<Character> cListL;
 
 	/**
 	 * constructor for the class
@@ -74,9 +76,9 @@ public class CountSubstrings {
 		{
 			System.out.println("The String <" + word + "> will be searched in file " + dF + "\n");
 
-			BufferedReader reader = new BufferedReader(new FileReader(dF));
+			BufferedReader r = new BufferedReader(new FileReader(dF));
 
-			String read = reader.readLine();
+			String read = r.readLine();
 
 			for(int i = 0; i < word.length(); i++)
 			{
@@ -90,37 +92,9 @@ public class CountSubstrings {
 
 				while(obj.hasMoreTokens())
 				{
-					ArrayList<Character> charArrayList = new ArrayList<Character>();
-					LinkedList<Character> charLinkedList = new LinkedList<Character>();
-
-					String token = obj.nextToken();
-
-					for(int i=0;i<token.length();i++)
-					{
-						charArrayList.add(token.charAt(i));
-						charLinkedList.add(token.charAt(i));
-					}
-
-					//count time for ArrayList
-					long startA = System.currentTimeMillis();
-					if(findBrute(charArrayList,listA)!=-1){
-						countA++;
-					}
-					long endA = System.currentTimeMillis();
-					timeA = timeA + (endA-startA);
-					//end of timing block
-
-					//count time for LinkedList
-					long startL = System.currentTimeMillis();
-					if(findBrute( charLinkedList,listL)!=-1){
-						countL++;
-					}
-					long endL = System.currentTimeMillis();
-					timeL = timeL + (endL-startL);
-					//end of timing block
-
+					time(obj);
 				}
-				read = reader.readLine();
+				read = r.readLine();
 			}
 
 			System.out.println("Using ArrayList, found " + countA + "matches, delivered in " + timeA + " milliseconds.");
@@ -131,6 +105,42 @@ public class CountSubstrings {
 			System.out.println("Error!");
 			System.exit(1);
 		}
+	}
+
+	/**
+	 * records the processing time of the two different ADT types
+	 * @param obj: StringTokenizer object
+	 */
+	private void time(StringTokenizer obj)
+	{
+		cListA = new ArrayList<Character>();
+		cListL = new LinkedList<Character>();
+
+		String token = obj.nextToken();
+
+		for(int i=0;i<token.length();i++)
+		{
+			cListA.add(token.charAt(i));
+			cListL.add(token.charAt(i));
+		}
+
+		//count time for ArrayList
+		long startA = System.currentTimeMillis();
+		if(findBrute(cListA,listA)!=-1){
+			countA++;
+		}
+		long endA = System.currentTimeMillis();
+		timeA = timeA + (endA-startA);
+		//end of timing block
+
+		//count time for LinkedList
+		long startL = System.currentTimeMillis();
+		if(findBrute( cListL,listL)!=-1){
+			countL++;
+		}
+		long endL = System.currentTimeMillis();
+		timeL = timeL + (endL-startL);
+		//end of timing block
 	}
 
 	//findBrute from CUlearn
